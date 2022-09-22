@@ -1,0 +1,9 @@
+TWS_PORT = 7497 # trader workstation port
+MAXIMUM_ORDER = 250000 # maximum order size in dollars
+ALPHA = 0.002 # critical value in decimal
+CORRELATION_STRENGTH = 0.65 # minimum pearson correlation strength to place order
+PROFIT = 0.01 # profit to take in decimal
+RISK = 0.01 # risk to take in decimal
+WAIT_FOR_FILL = 10 # how many seconds to wait for an order to fill before killing it
+HISTORY_LOOKBACK = 150 # how many seconds to look back to determine trend (multiple of 30)
+SPREADSHEET_ID = "1hQNlZSpLDa-DY4_nSWQYNRZbQrA4T0aN4HjYQEDHEk0" # google spreadsheet id for points and settings
