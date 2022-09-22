@@ -154,7 +154,6 @@ async def run(contracts, points, settings):
     # for each bar that comes in every 5 seconds
     async for bars, _ in ib.barUpdateEvent:
         current_bar = bars[-1]
-        print(current_bar)
 
         # if its a 30 second candles
         if current_bar.time.second % 30 == 0:
@@ -175,8 +174,11 @@ async def run(contracts, points, settings):
 
                     # if price going down and visible downward trend in past X seconds
                     if current_bar.close > pivot[0] * (1 - ALPHA) and r < -CORRELATION_STRENGTH:
-
-                        print("Going down - " + bars.contract.symbol +
+                        
+                        # logging timestamp
+                        timestamp = datetime.now().strftime("[%Y-%m-%d %H:%M:%S]: ")
+                        
+                        print(timestamp + "Going down - " + bars.contract.symbol +
                               " - " + str(current_bar.close) + " - " + str(r))
 
                         # if trade meets minimum probability, execute
@@ -188,13 +190,13 @@ async def run(contracts, points, settings):
                             order = place_order(
                                 "BUY", bars.contract, quantity, pivot[0])
                             if order:
-                                print("Placed LONG for " + str(quantity) + " shares of " +
+                                print(timestamp + "Placed LONG for " + str(quantity) + " shares of " +
                                       bars.contract.symbol + " at $" + str(current_bar.close))
 
                     # if price going up and visible upward trend in past X seconds
                     if current_bar.close < pivot[0] * (1 + ALPHA) and r > CORRELATION_STRENGTH:
 
-                        print("Going up - " + bars.contract.symbol +
+                        print(timestamp + "Going up - " + bars.contract.symbol +
                               " - " + str(current_bar.close) + " - " + str(r))
 
                         # if trade meets minimum probability, execute
@@ -207,7 +209,7 @@ async def run(contracts, points, settings):
                             order = place_order(
                                 "SELL", bars.contract, quantity, pivot[0])
                             if order:
-                                print("Placed SHORT for " + str(quantity) + " shares of " +
+                                print(timestamp + "Placed SHORT for " + str(quantity) + " shares of " +
                                       bars.contract.symbol + " at $" + str(current_bar.close))
 
 try:
